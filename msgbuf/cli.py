@@ -83,7 +83,7 @@ def main(argv=None):
 
     ############################################################################
 
-    if shr.cfg.notifier == '':
+    if not shr.cfg.notifier:
         print('Notifier command cannot be empty', file=sys.stderr)
         return 1
 
