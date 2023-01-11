@@ -146,7 +146,3 @@ def main(argv=None):
     logging.info('Dequeuer thread exited')
 
     return 0
-
-
-if __name__ == '__main__':
-    sys.exit(main())
