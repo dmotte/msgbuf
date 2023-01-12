@@ -5,5 +5,6 @@
 
 /*.egg-info/
 
+/buffer.txt
 /example/buffer.txt
 /test/buffer.txt
