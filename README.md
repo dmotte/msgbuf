@@ -18,16 +18,10 @@ pip3 install msgbuf
 
 This tool reads text from the **standard input** (`stdin`) stream and divides it into **chunks**. Then, for each chunk, a **notifier** command is invoked on a separate thread.
 
-As a sample notifier command we have the [`tg.py`](example/tg.py) script, which reads all the standard input until its end and sends the content to a _Telegram_ user (as a bot). For example, we can use it like this:
+As a sample notifier command we can use _cURL_ to send the text to a _Telegram_ user (as a bot). Example:
 
 ```bash
-cat /etc/motd | python3 example/tg.py <bot_token> <chat_id>
-```
-
-So a full usage example of **msgbuf** can be:
-
-```bash
-tail -f /var/log/my-log-file | msgbuf -fbuffer.txt python3 example/tg.py <bot_token> <chat_id>
+tail -f /var/log/my-log-file | msgbuf -fbuffer.txt curl -sSXPOST "https://api.telegram.org/bot.../sendMessage" -dchat_id="..." --data-urlencode text@- --fail-with-body -w'\n'
 ```
 
 This is a simple graphical representation of what happens when we run the shell line above:
@@ -35,7 +29,7 @@ This is a simple graphical representation of what happens when we run the shell 
 ```mermaid
 graph LR
     tail(fa:fa-gear tail -f fa:fa-scroll)
-    send(fa:fa-gear tg.py fa:fa-paper-plane)
+    send(fa:fa-gear curl fa:fa-paper-plane)
     file(fa:fa-file buffer.txt)
 
     tail --> buffer
