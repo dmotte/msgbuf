@@ -10,6 +10,7 @@ Pre-built binaries are available. You can download the latest version with:
 
 ```bash
 curl -Lo msgbuf "https://github.com/dmotte/msgbuf/releases/latest/download/msgbuf-$(uname -m)-unknown-linux-gnu"
+chmod +x msgbuf
 ```
 
 ## Usage
