@@ -18,7 +18,7 @@ chmod +x msgbuf
 As a sample notifier command we can use _cURL_ to send the text to a _Telegram_ user (as a bot). Example:
 
 ```bash
-tail -f /var/log/my-log-file | ./msgbuf curl -sSXPOST "https://api.telegram.org/bot.../sendMessage" -dchat_id=... --data-urlencode text@- --fail-with-body -w'\n'
+tail -f /var/log/my-log-file | ./msgbuf -- curl -sSXPOST "https://api.telegram.org/bot.../sendMessage" -dchat_id=... --data-urlencode text@- --fail-with-body -w'\n'
 ```
 
 This is a simple graphical representation of what happens when we run the shell line above:
