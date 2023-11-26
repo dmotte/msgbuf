@@ -1,9 +1,1 @@
-/msgbuf/__pycache__/
-
-/build/
-/dist/
-
-/*.egg-info/
-
-/buffer.txt
-/test/buffer.txt
+/target/

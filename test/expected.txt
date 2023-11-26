@@ -1,0 +1,62 @@
+DEBUG: Args { debug: true, interval: 1, max_msg_len: 10, notifier: ["bash", "fake-notifier.sh"] }
+DEBUG: recv_and_invoke loop starting
+DEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "Hi, this i"
+i siht ,iHDEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "s sample l"
+l elpmas sDEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "og content"
+Error: found pattern O|o. Setting retry to 3
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "og content"
+Error: retry is 3. Setting it to 2
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "og content"
+Error: retry is 2. Setting it to 1
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "og content"
+Error: retry is 1. Setting it to 0
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "og content"
+tnetnoc goDEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "\n\nGonna wa"
+
+
+aw annoGDEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "it some ti"
+Error: found pattern I|i. Setting retry to 2
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "it some ti"
+Error: retry is 2. Setting it to 1
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "it some ti"
+Error: retry is 1. Setting it to 0
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "it some ti"
+it emos tiDEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "me\n"
+em
+DEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "And now gu"
+Error: found pattern A|a. Setting retry to 0
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "And now gu"
+ug won dnADEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "ess what? "
+Error: found pattern E|e. Setting retry to 1
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "ess what? "
+Error: retry is 1. Setting it to 0
+The notifier command returned non-zero exit status 1
+DEBUG: invoking notifier with input: "ess what? "
+ ?tahw sseDEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "Some more "
+ erom emoSDEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "time\nA lit"
+emit
+til ADEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "tle more\nO"
+erom elt
+ODEBUG: msg is empty; receiving first byte
+DEBUG: invoking notifier with input: "k, stop"
+pots ,kDEBUG: recv_and_invoke loop finished
