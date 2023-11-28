@@ -1,5 +1,9 @@
 # msgbuf
 
+[![GitHub main workflow](https://img.shields.io/github/actions/workflow/status/dmotte/msgbuf/main.yml?branch=main&logo=github&label=main&style=flat-square)](https://github.com/dmotte/msgbuf/actions)
+[![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/dmotte/msgbuf?logo=github&style=flat-square)](https://github.com/dmotte/msgbuf/releases/latest)
+[![GitHub all releases](https://img.shields.io/github/downloads/dmotte/msgbuf/total?logo=github&style=flat-square)](https://github.com/dmotte/msgbuf/releases/latest)
+
 :crab: A standalone **message buffer** application.
 
 This tool reads text from the **standard input** (`stdin`) stream and divides it into chunks, called "**messages**". Then, for each message, a **notifier** command is invoked on a separate thread.
