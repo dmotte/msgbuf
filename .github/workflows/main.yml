@@ -12,4 +12,4 @@ jobs:
     permissions: { contents: write }
     uses: dmotte/misc/.github/workflows/cicd-with-script.yml@main
     with:
-      path: $GITHUB_ACTION_PATH/../../scripts/cicd/rust-app.sh
+      script: bash "$(realpath "$GITHUB_ACTION_PATH/../../scripts/cicd/rust-app.sh")"
