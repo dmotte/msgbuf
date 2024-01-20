@@ -5,13 +5,13 @@ set -e
 fname="$(dirname "$0")/fake-notifier-status.txt"
 
 if [ -f "$fname" ]; then
-    retry="$(cat "$fname")"
+    retry=$(cat "$fname")
 
     if [ "$retry" -le 0 ]; then
         rm "$fname"
         cat | rev
     else
-        new_retry="$(( retry - 1 ))"
+        new_retry=$(( retry - 1 ))
         echo "Error: retry is $retry. Setting it to $new_retry" >&2
         echo "$new_retry" > "$fname"
         exit 1
