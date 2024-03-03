@@ -5,7 +5,7 @@ set -e
 fname="$(dirname "$0")/fake-notifier-status.txt"
 
 if [ -f "$fname" ]; then
-    retry=$(cat "$fname")
+    retry=$(<"$fname")
 
     if [ "$retry" -le 0 ]; then
         rm "$fname"
