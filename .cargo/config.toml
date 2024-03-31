@@ -1,8 +1,12 @@
 [target.aarch64-unknown-linux-gnu]
-linker = "aarch64-linux-gnu-gcc"
+linker = "/usr/bin/aarch64-linux-gnu-gcc"
 [target.armv7-unknown-linux-gnueabihf]
-linker = "arm-linux-gnueabihf-gcc"
+linker = "/usr/bin/arm-linux-gnueabihf-gcc"
+[target.i686-pc-windows-gnu]
+linker = "/usr/bin/i686-w64-mingw32-gcc"
 [target.i686-unknown-linux-gnu]
-linker = "i686-linux-gnu-gcc"
+linker = "/usr/bin/i686-linux-gnu-gcc"
+[target.x86_64-pc-windows-gnu]
+linker = "/usr/bin/x86_64-w64-mingw32-gcc"
 [target.x86_64-unknown-linux-gnu]
-linker = "x86_64-linux-gnu-gcc"
+linker = "/usr/bin/x86_64-linux-gnu-gcc"
