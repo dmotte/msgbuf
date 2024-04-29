@@ -2,7 +2,7 @@
 
 set -e
 
-fname="$(dirname "$0")/fake-notifier-status.txt"
+fname=$(dirname "$0")/fake-notifier-status.txt
 
 if [ -f "$fname" ]; then
     retry=$(<"$fname")
