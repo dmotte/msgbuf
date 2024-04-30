@@ -19,7 +19,7 @@ if [ -f "$fname" ]; then
 else
     read -rN1
 
-    case "$REPLY" in
+    case $REPLY in
         A|a) pattern='A|a'; retry='0';;
         E|e) pattern='E|e'; retry='1';;
         I|i) pattern='I|i'; retry='2';;
