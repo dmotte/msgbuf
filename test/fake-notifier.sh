@@ -9,7 +9,7 @@ if [ -f "$fname" ]; then
 
     if [ "$retry" -le 0 ]; then
         rm "$fname"
-        cat | rev
+        rev
     else
         new_retry=$(( retry - 1 ))
         echo "Error: retry is $retry. Setting it to $new_retry" >&2
