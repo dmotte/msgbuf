@@ -74,7 +74,7 @@ fn main() {
                     msg_len = 1;
                 }
                 Err(RecvError) => stdin_eof = true,
-            };
+            }
 
             // Give the sender some time to send everything it has to
             thread::sleep(MIN_RECV_TIME);
@@ -102,7 +102,7 @@ fn main() {
                 }
                 Err(TryRecvError::Empty) => break 'nonblocking_recv,
                 Err(TryRecvError::Disconnected) => stdin_eof = true,
-            };
+            }
         }
 
         if stdin_eof && msg_len == 0 {
