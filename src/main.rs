@@ -1,6 +1,6 @@
 use clap::Parser;
 use std::io::{self, Read, Write};
-use std::process::{exit, Command, Stdio};
+use std::process::{Command, Stdio, exit};
 use std::sync::mpsc::{self, RecvError, TryRecvError};
 use std::thread;
 use std::time::{Duration, Instant};
