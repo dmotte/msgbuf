@@ -1,5 +1,5 @@
 use clap::Parser;
-use std::io::{self, BufReader, Read, Write};
+use std::io::{self, Read, Write};
 use std::process::{Command, Stdio, exit};
 use std::sync::mpsc::{self, RecvError, TryRecvError};
 use std::thread;
@@ -46,8 +46,8 @@ fn main() {
 
     let hnd_read_and_send = thread::spawn(move || {
         let stdin = io::stdin();
-        let reader = BufReader::new(stdin.lock());
-        for b in reader.bytes() {
+        let handle = stdin.lock();
+        for b in handle.bytes() {
             tx.send(b.unwrap()).unwrap();
         }
     });
