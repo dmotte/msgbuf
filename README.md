@@ -13,6 +13,13 @@ This tool reads text from the **standard input** (`stdin`) stream and divides it
 Pre-built binaries are available. You can download the latest version with:
 
 ```bash
+curl -fLo msgbuf "https://github.com/dmotte/msgbuf/releases/latest/download/msgbuf-$(curl -fsSL https://sh.rustup.rs/ | RUSTUP_INIT_SH_PRINT=arch bash)"
+chmod +x msgbuf
+```
+
+Or simpler approach (but you need to know the `-<vendor>-<sys>-<abi>` part of the Rust **target triple**):
+
+```bash
 curl -fLo msgbuf "https://github.com/dmotte/msgbuf/releases/latest/download/msgbuf-$(uname -m)-unknown-linux-gnu"
 chmod +x msgbuf
 ```
@@ -46,4 +53,4 @@ graph LR
     invoker --> curl
 ```
 
-> **Note**: for more information on how to use this tool, you can also refer to the help message (`./msgbuf --help`).
+> **Note**: for more information on how to use this tool, you can also refer to the help message (`--help`).
