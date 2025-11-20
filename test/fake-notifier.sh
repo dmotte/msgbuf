@@ -17,7 +17,7 @@ if [ -f "$fname" ]; then
         exit 1
     fi
 else
-    read -rN1
+    IFS= read -rN1
 
     case $REPLY in
         A|a) pattern='A|a'; retry='0';;
