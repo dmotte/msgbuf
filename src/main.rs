@@ -56,7 +56,7 @@ fn main() -> Result<()> {
         Ok(())
     });
 
-    let mut msg = vec![b'\0'; args.max_msg_len];
+    let mut msg = vec![0u8; args.max_msg_len];
     let mut msg_len: usize = 0;
     let mut stdin_eof = false;
     let mut next_invocation = Instant::now();
