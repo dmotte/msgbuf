@@ -1,6 +1,7 @@
+use anyhow::{Context, Result, bail};
 use clap::Parser;
 use std::io::{self, Read, Write};
-use std::process::{Command, Stdio, exit};
+use std::process::{Command, Stdio};
 use std::sync::mpsc::{self, RecvError, TryRecvError};
 use std::thread;
 use std::time::{Duration, Instant};
@@ -31,25 +32,28 @@ struct Args {
     notifier: Vec<String>,
 }
 
-fn main() {
+#[allow(clippy::too_many_lines)]
+fn main() -> Result<()> {
     let args = Args::parse();
     if args.debug {
         println!("DEBUG: {args:?}");
     }
     let interval = Duration::from_secs(args.interval);
     if args.notifier.is_empty() {
-        eprintln!("Notifier command cannot be empty");
-        exit(1);
+        bail!("the notifier command cannot be empty");
     }
 
     let (tx, rx) = mpsc::sync_channel(CHAN_BUF_SIZE);
 
-    let hnd_read_and_send = thread::spawn(move || {
+    let hnd_read_and_send = thread::spawn(move || -> Result<()> {
         let stdin = io::stdin();
         let handle = stdin.lock();
         for b in handle.bytes() {
-            tx.send(b.unwrap()).unwrap();
+            tx.send(b.context("failed to read byte from stdin")?)
+                .context("failed to send byte to internal channel")?;
         }
+
+        Ok(())
     });
 
     let mut msg = vec![b'\0'; args.max_msg_len];
@@ -115,8 +119,8 @@ fn main() {
 
         if args.debug {
             println!(
-                "DEBUG: invoking notifier with input: {:?}",
-                std::str::from_utf8(&msg[0..msg_len]).unwrap()
+                "DEBUG: invoking notifier command with input: {:?}",
+                std::str::from_utf8(&msg[..msg_len]).context("bytes are not valid UTF-8")?,
             );
         }
 
@@ -124,21 +128,25 @@ fn main() {
             .args(&args.notifier[1..])
             .stdin(Stdio::piped())
             .spawn()
-            .unwrap();
+            .context("failed to spawn notifier command")?;
         child
             .stdin
             .take()
-            .unwrap()
-            .write_all(&msg[0..msg_len])
-            .unwrap();
-        let exit_status = child.wait().unwrap();
+            .context("failed to acquire notifier process stdin")?
+            .write_all(&msg[..msg_len])
+            .context("failed to write message to notifier process")?;
+        let exit_status = child
+            .wait()
+            .context("failed to wait for notifier process to exit")?;
         if exit_status.success() {
             msg_len = 0;
         } else {
-            eprintln!(
-                "The notifier command returned non-zero exit status {}",
-                exit_status.code().unwrap()
-            );
+            match exit_status.code() {
+                Some(code) => {
+                    eprintln!("The notifier command returned non-zero exit status {code}");
+                }
+                None => eprintln!("The notifier command was terminated by a signal"),
+            }
         }
 
         if stdin_eof && msg_len == 0 {
@@ -150,5 +158,10 @@ fn main() {
         println!("DEBUG: recv_and_invoke loop finished");
     }
 
-    hnd_read_and_send.join().unwrap();
+    hnd_read_and_send
+        .join()
+        .map_err(|panic| anyhow::anyhow!("the stdin reader thread panicked: {panic:?}"))?
+        .context("the stdin reader thread returned an error")?;
+
+    Ok(())
 }
