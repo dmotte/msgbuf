@@ -15,5 +15,5 @@ sleep 3
 echo 'A little more'
 sleep 2
 
-# echo 'Ok, stop'
-echo -n 'Ok, stop'
+# echo 'Ok, "stop"'
+echo -n 'Ok, "stop"'

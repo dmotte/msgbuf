@@ -58,5 +58,5 @@ til ADEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "tle more\nO"
 erom elt
 ODEBUG: msg is empty; receiving first byte
-DEBUG: invoking notifier command with input: "k, stop"
-pots ,kDEBUG: recv_and_invoke loop finished
+DEBUG: invoking notifier command with input: "k, \"stop\""
+"pots" ,kDEBUG: recv_and_invoke loop finished

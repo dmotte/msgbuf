@@ -6,6 +6,21 @@ use std::sync::mpsc::{self, RecvError, TryRecvError};
 use std::thread;
 use std::time::{Duration, Instant};
 
+// Src: https://github.com/dmotte/misc/tree/main/snippets
+fn escape_ascii(bytes: &[u8]) -> String {
+    // Pre-allocate space for at least the length of the input bytes
+    let mut result = String::with_capacity(bytes.len());
+
+    result.extend(
+        bytes
+            .iter()
+            .flat_map(|&b| std::ascii::escape_default(b))
+            .map(|b| b as char),
+    );
+
+    result
+}
+
 const CHAN_BUF_SIZE: usize = 4096;
 const MIN_RECV_TIME: Duration = Duration::from_millis(100);
 
@@ -119,8 +134,8 @@ fn main() -> Result<()> {
 
         if args.debug {
             println!(
-                "DEBUG: invoking notifier command with input: {:?}",
-                std::str::from_utf8(&msg[..msg_len]).context("bytes are not valid UTF-8")?,
+                "DEBUG: invoking notifier command with input: \"{}\"",
+                escape_ascii(&msg[..msg_len]),
             );
         }
 
