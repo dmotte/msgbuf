@@ -2,9 +2,11 @@ DEBUG: Args { debug: true, interval: 1, max_msg_len: 10, notifier: ["bash", "fak
 DEBUG: recv_and_invoke loop starting
 DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "Hi, this i"
-i siht ,iHDEBUG: msg is empty; receiving first byte
+Content: 'Hi, this i'
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "s sample l"
-l elpmas sDEBUG: msg is empty; receiving first byte
+Content: 's sample l'
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "og content"
 Error: found pattern O|o. Setting retry to 3
 The notifier command returned non-zero exit status 1
@@ -18,11 +20,11 @@ DEBUG: invoking notifier command with input: "og content"
 Error: retry is 1. Setting it to 0
 The notifier command returned non-zero exit status 1
 DEBUG: invoking notifier command with input: "og content"
-tnetnoc goDEBUG: msg is empty; receiving first byte
+Content: 'og content'
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "\n\nGonna wa"
-
-
-aw annoGDEBUG: msg is empty; receiving first byte
+Content: $'\n\nGonna wa'
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "it some ti"
 Error: found pattern I|i. Setting retry to 2
 The notifier command returned non-zero exit status 1
@@ -33,15 +35,17 @@ DEBUG: invoking notifier command with input: "it some ti"
 Error: retry is 1. Setting it to 0
 The notifier command returned non-zero exit status 1
 DEBUG: invoking notifier command with input: "it some ti"
-it emos tiDEBUG: msg is empty; receiving first byte
+Content: 'it some ti'
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "me\n"
-em
+Content: $'me\n'
 DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "And now gu"
 Error: found pattern A|a. Setting retry to 0
 The notifier command returned non-zero exit status 1
 DEBUG: invoking notifier command with input: "And now gu"
-ug won dnADEBUG: msg is empty; receiving first byte
+Content: 'And now gu'
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "ess what? "
 Error: found pattern E|e. Setting retry to 1
 The notifier command returned non-zero exit status 1
@@ -49,14 +53,17 @@ DEBUG: invoking notifier command with input: "ess what? "
 Error: retry is 1. Setting it to 0
 The notifier command returned non-zero exit status 1
 DEBUG: invoking notifier command with input: "ess what? "
- ?tahw sseDEBUG: msg is empty; receiving first byte
+Content: 'ess what? '
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "Some more "
- erom emoSDEBUG: msg is empty; receiving first byte
+Content: 'Some more '
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "time\nA lit"
-emit
-til ADEBUG: msg is empty; receiving first byte
+Content: $'time\nA lit'
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "tle more\nO"
-erom elt
-ODEBUG: msg is empty; receiving first byte
+Content: $'tle more\nO'
+DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "k, \"stop\""
-"pots" ,kDEBUG: recv_and_invoke loop finished
+Content: 'k, "stop"'
+DEBUG: recv_and_invoke loop finished

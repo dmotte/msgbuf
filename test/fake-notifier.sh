@@ -9,7 +9,9 @@ if [ -f "$fname" ]; then
 
     if [ "$retry" -le 0 ]; then
         rm "$fname"
-        exec rev
+        content=$(cat; echo x); content=${content%x}
+        echo "Content: ${content@Q}"
+        exit
     else
         new_retry=$(( retry - 1 ))
         echo "Error: retry is $retry. Setting it to $new_retry" >&2
@@ -32,6 +34,7 @@ else
         echo "$retry" > "$fname"
         exit 1
     else
-        { echo -n "$REPLY"; cat; } | rev
+        content=$(echo -n "$REPLY"; cat; echo x); content=${content%x}
+        echo "Content: ${content@Q}"
     fi
 fi
