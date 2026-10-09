@@ -1,4 +1,4 @@
-DEBUG: Args { debug: true, interval: 1, max_msg_len: 10, notifier: ["bash", "helpers/fake-notifier.sh"] }
+DEBUG: Args { debug: true, input_mode: Binary, interval: 1, max_msg_len: 10, notifier: ["bash", "helpers/fake-notifier.sh"] }
 DEBUG: recv_and_invoke loop starting
 DEBUG: msg is empty; receiving first byte
 DEBUG: invoking notifier command with input: "Hi, this i"

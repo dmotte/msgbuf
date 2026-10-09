@@ -1,5 +1,5 @@
 use anyhow::{Context, Result, bail};
-use clap::Parser;
+use clap::{Parser, ValueEnum};
 use std::io::{self, Read, Write};
 use std::process::{Command, Stdio};
 use std::sync::mpsc::{self, RecvError, TryRecvError};
@@ -24,6 +24,14 @@ fn escape_ascii(bytes: &[u8]) -> String {
 const CHAN_BUF_SIZE: usize = 4096;
 const MIN_RECV_TIME: Duration = Duration::from_millis(100);
 
+#[derive(Clone, Copy, PartialEq, Eq, Debug, ValueEnum)]
+enum InputMode {
+    /// Process all bytes
+    Binary,
+    /// Process ASCII text only (bytes 0x00..0x7f) and ignore the rest
+    Ascii,
+}
+
 /// Message buffer
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -31,6 +39,10 @@ struct Args {
     /// Enable debug messages
     #[arg(short, long)]
     debug: bool,
+
+    /// Input mode
+    #[arg(short = 'I', long, value_enum, default_value = "binary")]
+    input_mode: InputMode,
 
     /// Minimum interval (in seconds) between checks for messages to be sent
     #[arg(short, long, default_value_t = 60)]
@@ -69,8 +81,12 @@ fn main() -> Result<()> {
     let hnd_read_and_send = thread::spawn(move || -> Result<()> {
         let stdin = io::stdin();
         let handle = stdin.lock();
-        for b in handle.bytes() {
-            tx.send(b.context("failed to read byte from stdin")?)
+        for byte in handle.bytes() {
+            let b = byte.context("failed to read byte from stdin")?;
+            if args.input_mode == InputMode::Ascii && b > 0x7f {
+                continue;
+            }
+            tx.send(b)
                 .context("failed to send byte to internal channel")?;
         }
 
