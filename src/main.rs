@@ -53,7 +53,13 @@ fn main() -> Result<()> {
     if args.debug {
         println!("DEBUG: {args:?}");
     }
+
     let interval = Duration::from_secs(args.interval);
+
+    if args.max_msg_len == 0 {
+        bail!("the maximum message length must be > 0");
+    }
+
     if args.notifier.is_empty() {
         bail!("the notifier command cannot be empty");
     }
