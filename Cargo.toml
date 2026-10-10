@@ -8,3 +8,10 @@ edition = "2024"
 [dependencies]
 anyhow = "1"
 clap = { version = "4", features = ["derive"] }
+
+[profile.release]
+# Inspired by https://github.com/johnthagen/min-sized-rust
+strip = true
+lto = true
+codegen-units = 1
+panic = "abort"
