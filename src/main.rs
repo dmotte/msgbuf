@@ -21,7 +21,9 @@ fn escape_ascii(bytes: &[u8]) -> String {
     result
 }
 
-const CHAN_BUF_SIZE: usize = 4096;
+/// Bounded channel internal buffer size multiplier
+const CHAN_SIZE_MULT: usize = 2;
+/// Minimum receive time
 const MIN_RECV_TIME: Duration = Duration::from_millis(100);
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug, ValueEnum)]
@@ -80,7 +82,7 @@ fn main() -> Result<()> {
     // reading from stdin because accessing io::stdin() directly is inherently
     // blocking by default, and we need a non-blocking way in the main thread
 
-    let (tx, rx) = mpsc::sync_channel(CHAN_BUF_SIZE);
+    let (tx, rx) = mpsc::sync_channel(args.max_msg_len * CHAN_SIZE_MULT);
 
     let hnd_read_and_send = thread::spawn(move || -> Result<()> {
         let stdin = io::stdin();
