@@ -123,7 +123,10 @@ fn main() -> Result<()> {
                     msg[0] = b;
                     msg_len = 1;
                 }
-                Err(RecvError) => stdin_eof = true,
+                Err(RecvError) => {
+                    stdin_eof = true;
+                    break 'recv_and_invoke;
+                }
             }
 
             // Give the sender some time to send everything it has to
@@ -200,7 +203,7 @@ fn main() -> Result<()> {
     }
 
     if args.debug {
-        println!("DEBUG: recv_and_invoke loop finished");
+        println!("DEBUG: recv_and_invoke loop finished; stdin_eof is {stdin_eof:?}");
     }
 
     hnd_read_and_send
