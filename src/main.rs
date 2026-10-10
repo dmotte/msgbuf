@@ -107,11 +107,12 @@ fn main() -> Result<()> {
     }
 
     'recv_and_invoke: loop {
-        // STEP: if msg is empty, start RECEIVING one byte (blocking)
+        // STEP: if we don't have anything to send and EOF is not
+        // reached yet, block on receiving a byte
 
-        if !stdin_eof && msg_len == 0 {
+        if msg_len == 0 && !stdin_eof {
             if args.debug {
-                println!("DEBUG: msg is empty; receiving first byte");
+                println!("DEBUG: nothing to send; blocking on receiving byte");
             }
 
             // Note: the call to recv is blocking
@@ -127,7 +128,7 @@ fn main() -> Result<()> {
             thread::sleep(MIN_RECV_TIME);
         }
 
-        // STEP: WAIT some time before proceeding, if needed
+        // STEP: wait some time before proceeding, if needed
 
         let now = Instant::now();
         if next_invocation < now {
@@ -138,7 +139,8 @@ fn main() -> Result<()> {
             next_invocation += interval;
         }
 
-        // STEP: RECEIVE the rest, until msg is full or EOF is reached
+        // STEP: receive what is available, until channel is empty, msg is
+        // full, or EOF is reached
 
         'nonblocking_recv: while !stdin_eof && msg_len < args.max_msg_len {
             // Note: the call to try_recv is non-blocking
@@ -156,7 +158,7 @@ fn main() -> Result<()> {
             break 'recv_and_invoke;
         }
 
-        // STEP: INVOKE the notifier command
+        // STEP: invoke the notifier command
 
         if args.debug {
             println!(
