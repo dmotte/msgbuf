@@ -76,6 +76,10 @@ fn main() -> Result<()> {
         bail!("the notifier command cannot be empty");
     }
 
+    // Note: we need the following additional channel and thread to offload
+    // reading from stdin because accessing io::stdin() directly is inherently
+    // blocking by default, and we need a non-blocking way in the main thread
+
     let (tx, rx) = mpsc::sync_channel(CHAN_BUF_SIZE);
 
     let hnd_read_and_send = thread::spawn(move || -> Result<()> {
