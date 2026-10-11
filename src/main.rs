@@ -2,7 +2,7 @@ use anyhow::{Context, Result, bail};
 use clap::{Parser, ValueEnum};
 use std::io::{self, Read, Write};
 use std::process::{Command, Stdio};
-use std::sync::mpsc::{self, RecvError, TryRecvError};
+use std::sync::mpsc::{self, TryRecvError};
 use std::thread;
 use std::time::{Duration, Instant};
 
@@ -118,15 +118,12 @@ fn main() -> Result<()> {
             }
 
             // Note: the call to recv is blocking
-            match rx.recv() {
-                Ok(b) => {
-                    msg[0] = b;
-                    msg_len = 1;
-                }
-                Err(RecvError) => {
-                    stdin_eof = true;
-                    break 'recv_and_invoke;
-                }
+            if let Ok(b) = rx.recv() {
+                msg[0] = b;
+                msg_len = 1;
+            } else {
+                stdin_eof = true;
+                break 'recv_and_invoke;
             }
 
             // Give the sender some time to send everything it has to
