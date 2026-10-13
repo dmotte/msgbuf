@@ -1,7 +1,8 @@
+mod notifier;
+
 use anyhow::{Context, Result, bail};
 use clap::{Parser, ValueEnum};
-use std::io::{self, Read, Write};
-use std::process::{Command, Stdio};
+use std::io::{self, Read};
 use std::sync::mpsc::{self, TryRecvError};
 use std::thread;
 use std::time::{Duration, Instant};
@@ -169,28 +170,14 @@ fn main() -> Result<()> {
             );
         }
 
-        let mut child = Command::new(&args.notifier[0])
-            .args(&args.notifier[1..])
-            .stdin(Stdio::piped())
-            .spawn()
-            .context("failed to spawn notifier command")?;
-        child
-            .stdin
-            .take()
-            .context("failed to acquire notifier process stdin")?
-            .write_all(&msg[..msg_len])
-            .context("failed to write message to notifier process")?;
-        let exit_status = child
-            .wait()
-            .context("failed to wait for notifier process to exit")?;
-        if exit_status.success() {
+        let status = notifier::invoke(&args.notifier[0], &args.notifier[1..], &msg[..msg_len])
+            .context("failed to invoke notifier")?;
+        if status.success() {
             msg_len = 0;
         } else {
-            match exit_status.code() {
-                Some(code) => {
-                    eprintln!("The notifier command returned non-zero exit status {code}");
-                }
-                None => eprintln!("The notifier command was terminated by a signal"),
+            match status.code() {
+                Some(code) => eprintln!("Error: notifier command failed with status code {code}"),
+                None => eprintln!("Error: notifier command terminated by a signal"),
             }
         }
 

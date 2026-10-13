@@ -9,16 +9,16 @@ Content: 's sample l'
 DEBUG: nothing to send; blocking on receiving byte
 DEBUG: invoking notifier command with input: "og content"
 Error: found pattern O|o. Setting retry to 3
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "og content"
 Error: retry is 3. Setting it to 2
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "og content"
 Error: retry is 2. Setting it to 1
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "og content"
 Error: retry is 1. Setting it to 0
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "og content"
 Content: 'og content'
 DEBUG: nothing to send; blocking on receiving byte
@@ -27,13 +27,13 @@ Content: $'\n\nGonna wa'
 DEBUG: nothing to send; blocking on receiving byte
 DEBUG: invoking notifier command with input: "it some ti"
 Error: found pattern I|i. Setting retry to 2
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "it some ti"
 Error: retry is 2. Setting it to 1
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "it some ti"
 Error: retry is 1. Setting it to 0
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "it some ti"
 Content: 'it some ti'
 DEBUG: nothing to send; blocking on receiving byte
@@ -42,16 +42,16 @@ Content: $'me\n'
 DEBUG: nothing to send; blocking on receiving byte
 DEBUG: invoking notifier command with input: "And now gu"
 Error: found pattern A|a. Setting retry to 0
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "And now gu"
 Content: 'And now gu'
 DEBUG: nothing to send; blocking on receiving byte
 DEBUG: invoking notifier command with input: "ess what? "
 Error: found pattern E|e. Setting retry to 1
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "ess what? "
 Error: retry is 1. Setting it to 0
-The notifier command returned non-zero exit status 1
+Error: notifier command failed with status code 1
 DEBUG: invoking notifier command with input: "ess what? "
 Content: 'ess what? '
 DEBUG: nothing to send; blocking on receiving byte
