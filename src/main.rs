@@ -47,7 +47,7 @@ struct Args {
     #[arg(short = 'I', long, value_enum, default_value = "binary")]
     input_mode: InputMode,
 
-    /// Minimum interval (in seconds) between checks for messages to be sent
+    /// Minimum interval (in seconds) between notifier command invocations
     #[arg(short, long, default_value_t = 60)]
     interval: u64,
 
