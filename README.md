@@ -124,7 +124,3 @@ flowchart TD
 
     End([#127937; <b>END</b>])
 ```
-
-## TODO
-
-Consider adding more debug messages.

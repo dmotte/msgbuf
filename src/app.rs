@@ -161,7 +161,7 @@ impl App {
             //   - self.len_send == 0, i.e. we cannot send anything
             // Based on that, we block on receiving a byte.
 
-            debug!("blocking on receiving byte");
+            debug!("receiving byte (blocking)");
 
             let Ok(byte) = self.rx.recv() else {
                 break 'recv_blocking; // EOF has been reached
@@ -177,6 +177,9 @@ impl App {
                 // self.len_send can either be still zero OR == self.len_all.
                 // In both cases, we now have to send the whole buffer content
                 // (self.len_all), as we cannot receive any bytes anymore.
+
+                debug!("buffer full, sending len_all ({}) bytes", self.len_all);
+
                 loop {
                     self.sleep_for_send();
 
@@ -199,6 +202,8 @@ impl App {
             // send something)
 
             'sleep_recv_polling: loop {
+                debug!("sleeping before receiving byte (polling)");
+
                 Self::sleep_for_recv();
 
                 self.sleep_for_send();
@@ -210,6 +215,8 @@ impl App {
                     //   - we don't see any bytes incoming anymore
                     //     (i.e. TryRecvError::Empty)
                     //   - we reach EOF
+
+                    debug!("receiving byte (polling)");
 
                     match self.rx.try_recv() {
                         Ok(byte) => {
@@ -231,6 +238,11 @@ impl App {
                         Err(TryRecvError::Empty) => {
                             // We have some bytes to send and we don't see any
                             // more bytes incoming. Let's send what we have now
+
+                            debug!(
+                                "no byte received by polling, sending len_send ({}) bytes",
+                                self.len_send
+                            );
 
                             if !self.try_send(self.len_send)? {
                                 // Send failed. We know that we still have
@@ -258,6 +270,8 @@ impl App {
             // send something), but self.buf is full, so we cannot
             // receive anything anymore now, only send
 
+            debug!("buffer full, sending len_send ({}) bytes", self.len_send);
+
             loop {
                 self.sleep_for_send();
 
@@ -272,9 +286,13 @@ impl App {
 
         // If we are here, it means that EOF has been reached
 
+        debug!("reached EOF");
+
         if self.len_all == 0 {
             return Ok(());
         }
+
+        debug!("sending remaining bytes ({})", self.len_all);
 
         // There is still something in the buffer. Send ALL the remaining
         // bytes, regardless of self.len_send
