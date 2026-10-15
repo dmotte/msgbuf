@@ -36,21 +36,24 @@ This is a simple graphical representation of what happens when we run the shell 
 
 ```mermaid
 graph LR
-    tail(fa:fa-gear tail -f fa:fa-scroll)
-    reader(fa:fa-gear reader)
-    invoker(fa:fa-gear invoker)
-    curl(fa:fa-gear curl fa:fa-paper-plane)
+    processTail(#9881;#65039; <code>tail -f</code> #128220;)
+    processCurl(#9881;#65039; <code>curl</code> #9992;#65039;)
 
-    tail --> reader
+    threadStdinReader(#129525; Thread <code>stdin-reader</code>)
+    threadMain(#129525; Thread <code>main</code>)
 
-    subgraph fa:fa-gear msgbuf
-        reader -- "channel" --> invoker
+    vecBuffer[#128203; Buffer]
 
-        invoker -- "put" --> msg
-        msg -- "get" --> invoker
+    processTail --> threadStdinReader
+
+    subgraph msgbuf [#9881;#65039; <code>msgbuf</code>]
+        threadStdinReader -- channel --> threadMain
+
+        threadMain -- put --> vecBuffer
+        vecBuffer -- get --> threadMain
     end
 
-    invoker --> curl
+    threadMain --> processCurl
 ```
 
 > **Note**: for more information on how to use this tool, you can also refer to the help message (`--help`).
