@@ -57,7 +57,9 @@ graph LR
 
 TODO recheck everything (especially README and end-to-end tests) to follow the new implementation
 
-TODO consider using logging framework instead of simple approach with debug bool
+TODO consider adding some more end-to-end tests to cover more cases?
+
+TODO try to fix `App.run` could run on an unclean struct. Maybe use a static function with variable move
 
 TODO consider writing some unit tests
 

@@ -1,13 +1,16 @@
 mod app;
 mod notifier;
 
-use anyhow::{Context, Result, bail};
-use app::App;
-use clap::{Parser, ValueEnum};
 use std::io::{self, Read};
 use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
+
+use anyhow::{Context, Result, bail};
+use clap::{Parser, ValueEnum};
+use log::debug;
+
+use app::App;
 
 /// Bounded channel internal buffer size multiplier
 const CHAN_SIZE_MULT: usize = 2;
@@ -24,10 +27,6 @@ enum InputMode {
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Enable debug messages
-    #[arg(short, long)]
-    debug: bool,
-
     /// Input mode
     #[arg(short = 'I', long, value_enum, default_value = "binary")]
     input_mode: InputMode,
@@ -53,10 +52,11 @@ struct Args {
 
 #[allow(clippy::too_many_lines)]
 fn main() -> Result<()> {
+    env_logger::builder().format_timestamp(None).init();
+
     let args = Args::parse();
-    if args.debug {
-        println!("DEBUG: {args:?}");
-    }
+
+    debug!("parsed command line arguments: {args:?}");
 
     if args.max_msg_len == 0 {
         bail!("the maximum message length must be > 0");
@@ -87,9 +87,7 @@ fn main() -> Result<()> {
         Ok(())
     });
 
-    if args.debug {
-        println!("DEBUG: app run starting");
-    }
+    debug!("app run starting");
 
     let mut app = App::new(
         args.max_msg_len,
@@ -98,14 +96,11 @@ fn main() -> Result<()> {
         Duration::from_secs(args.interval),
         &args.notifier[0],
         &args.notifier[1..],
-        args.debug,
     );
 
     app.run()?;
 
-    if args.debug {
-        println!("DEBUG: app run finished");
-    }
+    debug!("app run finished");
 
     hnd_read_and_send
         .join()

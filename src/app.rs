@@ -1,7 +1,10 @@
-use crate::notifier;
 use std::sync::mpsc::{Receiver, TryRecvError};
 use std::thread;
 use std::time::{Duration, Instant};
+
+use log::{Level, debug, error, log_enabled};
+
+use crate::notifier;
 
 // Src: https://github.com/dmotte/misc/tree/main/snippets
 fn escape_ascii(bytes: &[u8]) -> String {
@@ -51,9 +54,6 @@ pub struct App {
     notifier_program: String,
     /// Arguments to be passed to the notifier command
     notifier_args: Vec<String>,
-
-    /// If true, enables debug messages
-    debug: bool,
 }
 
 impl App {
@@ -64,7 +64,6 @@ impl App {
         interval_send: Duration,
         notifier_program: impl Into<String>,
         notifier_args: impl IntoIterator<Item = impl Into<String>>,
-        debug: bool,
     ) -> Self {
         Self {
             buf: vec![0u8; size],
@@ -79,8 +78,6 @@ impl App {
             next_send: Instant::now(),
             notifier_program: notifier_program.into(),
             notifier_args: notifier_args.into_iter().map(Into::into).collect(),
-
-            debug,
         }
     }
 
@@ -106,11 +103,9 @@ impl App {
 
         self.next_send = Instant::now() + self.interval_send;
 
-        if self.debug {
-            println!(
-                "DEBUG: invoking notifier command with input: \"{}\"",
-                escape_ascii(&self.buf[..len]),
-            );
+        if log_enabled!(Level::Debug) {
+            let escaped = escape_ascii(&self.buf[..len]);
+            debug!("invoking notifier command with input: \"{escaped}\"");
         }
 
         let status = notifier::invoke(
@@ -128,9 +123,9 @@ impl App {
             Ok(true)
         } else {
             if let Some(code) = status.code() {
-                eprintln!("Error: notifier command failed with status code {code}");
+                error!("notifier command failed with status code {code}");
             } else {
-                eprintln!("Error: notifier command terminated by a signal");
+                error!("notifier command terminated by a signal");
             }
 
             Ok(false)
@@ -158,9 +153,7 @@ impl App {
             //   - self.len_send == 0, i.e. we cannot send anything
             // Based on that, we block on receiving a byte.
 
-            if self.debug {
-                println!("DEBUG: blocking on receiving byte");
-            }
+            debug!("blocking on receiving byte");
 
             let Ok(byte) = self.rx.recv() else {
                 break 'recv_blocking; // EOF has been reached
