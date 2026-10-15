@@ -1,0 +1,172 @@
+[DEBUG msgbuf] parsed command line arguments: Args { input_mode: Binary, interval: 1, split_on_byte: Some(10), max_msg_len: 10, notifier: ["bash", "fake-notifier.sh"] }
+[DEBUG msgbuf] app run starting
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "Hi, this i"
+Content: 'Hi, this i'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "s sample l"
+Content: 's sample l'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "og content"
+Error: found pattern O|o. Setting retry to 3
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "og content"
+Error: retry is 3. Setting it to 2
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "og content"
+Error: retry is 2. Setting it to 1
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "og content"
+Error: retry is 1. Setting it to 0
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "og content"
+Content: 'og content'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "\n\n"
+Content: $'\n\n'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "Gonna wait"
+Content: 'Gonna wait'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: " some time"
+Content: ' some time'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "\n"
+Content: $'\n'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "And now gu"
+Error: found pattern A|a. Setting retry to 0
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "And now gu"
+Content: 'And now gu'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "ess what? "
+Error: found pattern E|e. Setting retry to 1
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "ess what? "
+Error: retry is 1. Setting it to 0
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "ess what? "
+Content: 'ess what? '
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "Some more "
+Content: 'Some more '
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "time\n"
+Content: $'time\n'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "A little m"
+Error: found pattern A|a. Setting retry to 0
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "A little m"
+Content: 'A little m'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "ore\n"
+Error: found pattern O|o. Setting retry to 3
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "ore\n"
+Error: retry is 3. Setting it to 2
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "ore\n"
+Error: retry is 2. Setting it to 1
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "ore\n"
+Error: retry is 1. Setting it to 0
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "ore\n"
+Content: $'ore\n'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] invoking notifier command with input: "Ok, \"stop\""
+Error: found pattern O|o. Setting retry to 3
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "Ok, \"stop\""
+Error: retry is 3. Setting it to 2
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "Ok, \"stop\""
+Error: retry is 2. Setting it to 1
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "Ok, \"stop\""
+Error: retry is 1. Setting it to 0
+[ERROR msgbuf::app] notifier command failed with status code 1
+[DEBUG msgbuf::app] invoking notifier command with input: "Ok, \"stop\""
+Content: 'Ok, "stop"'
+[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf] app run finished

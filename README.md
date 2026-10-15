@@ -127,6 +127,6 @@ flowchart TD
 
 ## TODO
 
-Consider adding some more end-to-end tests to cover more cases?
-
 Consider writing some unit tests.
+
+Consider adding more debug messages.
