@@ -36,3 +36,45 @@ where
 
     child.wait().map_err(Error::Wait)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn writes_something() -> Result<()> {
+        let status = invoke("cat", [], b"Hello, World!")?;
+
+        assert!(status.success());
+
+        Ok(())
+    }
+
+    #[test]
+    fn writes_nothing() -> Result<()> {
+        let status = invoke("cat", [], b"")?;
+
+        assert!(status.success());
+
+        Ok(())
+    }
+
+    #[test]
+    fn returns_status_code() -> Result<()> {
+        let status = invoke("sh", ["-c", "exit 7"], b"")?;
+
+        assert!(!status.success());
+        assert_eq!(status.code(), Some(7));
+
+        Ok(())
+    }
+
+    #[test]
+    fn returns_error_for_nonexistent_program() -> Result<()> {
+        let result = invoke("/nonexistent/program", [], b"");
+
+        assert!(matches!(result, Err(Error::Spawn(_))));
+
+        Ok(())
+    }
+}
