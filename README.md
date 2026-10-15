@@ -44,13 +44,14 @@ graph LR
 
     vecBuffer[#128203; Buffer]
 
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
     processTail --> threadStdinReader
 
     subgraph msgbuf [#9881;#65039; <code>msgbuf</code>]
         threadStdinReader -- channel --> threadMain
 
-        threadMain -- put --> vecBuffer
-        vecBuffer -- get --> threadMain
+        threadMain -- put --> vecBuffer -- get --> threadMain
     end
 
     threadMain --> processCurl
