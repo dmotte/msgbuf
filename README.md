@@ -127,6 +127,4 @@ flowchart TD
 
 ## TODO
 
-Consider writing some unit tests.
-
 Consider adding more debug messages.

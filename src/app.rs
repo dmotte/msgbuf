@@ -289,3 +289,31 @@ impl App {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    use std::sync::mpsc;
+
+    #[test]
+    fn empty_input_succeeds_without_invoking_notifier() -> Result<()> {
+        let (tx, rx) = mpsc::channel();
+
+        drop(tx); // Close the sender half of the channel
+
+        // Running with empty input should finish without even trying to
+        // invoke the notifier
+        App::new(
+            10,
+            rx,
+            None,
+            Duration::ZERO,
+            "/nonexistent/program",
+            std::iter::empty::<String>(),
+        )
+        .run()?;
+
+        Ok(())
+    }
+}
