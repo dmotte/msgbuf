@@ -92,16 +92,15 @@ fn main() -> Result<()> {
 
     debug!("app run starting");
 
-    let mut app = App::new(
+    App::new(
         args.max_msg_len,
         rx,
         args.split_on_byte,
         Duration::from_secs(args.interval),
         &args.notifier[0],
         &args.notifier[1..],
-    );
-
-    app.run()?;
+    )
+    .run()?;
 
     debug!("app run finished");
 

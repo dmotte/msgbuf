@@ -146,7 +146,15 @@ impl App {
         }
     }
 
-    pub fn run(&mut self) -> Result<()> {
+    /// Runs the main app logic.
+    ///
+    /// This method intentionally takes ownership of [`self`] (`mut self`)
+    /// instead of passing by mutable reference (`&mut self`), to prevent
+    /// calling this function on an already-run instance. The goal is to
+    /// enforce a "one-shot" execution lifecycle and ensure that, once this
+    /// function finishes or encounters an error, the instance is
+    /// cleanly dropped and cannot be reused or re-run later.
+    pub fn run(mut self) -> Result<()> {
         'recv_blocking: loop {
             // If we are here, it means that:
             //   - self.buf is NOT full, AND

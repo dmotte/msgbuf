@@ -63,8 +63,6 @@ TODO recheck everything (especially README and end-to-end tests) to follow the n
 
 TODO consider adding some more end-to-end tests to cover more cases?
 
-TODO try to fix `App.run` could run on an unclean struct. Maybe use a static function with variable move
-
 TODO consider writing some unit tests
 
 TODO flowchart draft:
