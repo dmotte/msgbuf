@@ -54,3 +54,72 @@ graph LR
 ```
 
 > **Note**: for more information on how to use this tool, you can also refer to the help message (`--help`).
+
+TODO recheck everything (especially README and end-to-end tests) to follow the new implementation
+
+TODO consider using logging framework instead of simple approach with debug bool
+
+TODO consider writing some unit tests
+
+TODO flowchart draft:
+
+```mermaid
+flowchart TD
+    Start([START])
+    Start --> recvBlocking
+
+    recvBlocking["recv (blocking)"]
+    recvBlocking -- Ok --> addByteBlocking[add_byte] --> chkFullBlocking
+    recvBlocking -- EOF --> chkLenAll
+
+    chkFullBlocking{"len_all == buf.len() ?"}
+    chkFullBlocking -- "true (buf is full)" --> sleepSendLenAllAsFull
+    chkFullBlocking -- "false (buf is NOT full)" --> chkLenSend
+
+    sleepSendLenAllAsFull[sleep_for_send]
+    sleepSendLenAllAsFull --> sendLenAllAsFull
+
+    sendLenAllAsFull["try_send(len_all)"]
+    sendLenAllAsFull -- true --> recvBlocking
+    sendLenAllAsFull -- false --> sleepSendLenAllAsFull
+
+    chkLenSend{"len_send > 0 ?"}
+    chkLenSend -- "true (could send something)" --> sleepMinRecvTime
+    chkLenSend -- "false (cannot send anything)" --> recvBlocking
+
+    sleepMinRecvTime[sleep_for_recv]
+    sleepMinRecvTime --> sleepRecvPolling[sleep_for_send] --> recvPolling
+
+    recvPolling[try_recv]
+    recvPolling -- Ok --> addBytePolling[add_byte] --> chkFullPolling
+    recvPolling -- Empty --> sendLenSendAsPollingEmpty
+    recvPolling -- EOF --> chkLenAll
+
+    chkFullPolling{"len_all == buf.len() ?"}
+    chkFullPolling -- "true (buf is full)" --> sendLenSendAsFull
+    chkFullPolling -- "false (buf is NOT full)" --> recvPolling
+
+    sendLenSendAsFull["try_send(len_send)"]
+    sendLenSendAsFull -- true --> recvBlocking
+    sendLenSendAsFull -- false --> sleepSendLenSendAsFull
+
+    sleepSendLenSendAsFull[sleep_for_send]
+    sleepSendLenSendAsFull --> sendLenSendAsFull
+
+    sendLenSendAsPollingEmpty["try_send(len_send)"]
+    sendLenSendAsPollingEmpty -- true --> recvBlocking
+    sendLenSendAsPollingEmpty -- false --> sleepMinRecvTime
+
+    chkLenAll{"len_all > 0 ?"}
+    chkLenAll -- "true (something in buf)" --> sleepSendLenAllAsEOF
+    chkLenAll -- "false (nothing in buf)" --> End
+
+    sleepSendLenAllAsEOF[sleep_for_send]
+    sleepSendLenAllAsEOF --> sendLenAllAsEOF
+
+    sendLenAllAsEOF["try_send(len_all)"]
+    sendLenAllAsEOF -- true --> End
+    sendLenAllAsEOF -- false --> sleepSendLenAllAsEOF
+
+    End([END])
+```

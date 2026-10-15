@@ -1,31 +1,16 @@
+mod app;
 mod notifier;
 
 use anyhow::{Context, Result, bail};
+use app::App;
 use clap::{Parser, ValueEnum};
 use std::io::{self, Read};
-use std::sync::mpsc::{self, TryRecvError};
+use std::sync::mpsc;
 use std::thread;
-use std::time::{Duration, Instant};
-
-// Src: https://github.com/dmotte/misc/tree/main/snippets
-fn escape_ascii(bytes: &[u8]) -> String {
-    // Pre-allocate space for at least the length of the input bytes
-    let mut result = String::with_capacity(bytes.len());
-
-    result.extend(
-        bytes
-            .iter()
-            .flat_map(|&b| std::ascii::escape_default(b))
-            .map(|b| b as char),
-    );
-
-    result
-}
+use std::time::Duration;
 
 /// Bounded channel internal buffer size multiplier
 const CHAN_SIZE_MULT: usize = 2;
-/// Minimum receive time
-const MIN_RECV_TIME: Duration = Duration::from_millis(100);
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug, ValueEnum)]
 enum InputMode {
@@ -51,6 +36,10 @@ struct Args {
     #[arg(short, long, default_value_t = 60)]
     interval: u64,
 
+    /// If set, message splits will preferably occur on this byte value
+    #[arg(short, long)]
+    split_on_byte: Option<u8>,
+
     /// Maximum message length in bytes
     #[arg(short, long, default_value_t = 1024)]
     max_msg_len: usize,
@@ -68,8 +57,6 @@ fn main() -> Result<()> {
     if args.debug {
         println!("DEBUG: {args:?}");
     }
-
-    let interval = Duration::from_secs(args.interval);
 
     if args.max_msg_len == 0 {
         bail!("the maximum message length must be > 0");
@@ -100,94 +87,24 @@ fn main() -> Result<()> {
         Ok(())
     });
 
-    let mut msg = vec![0u8; args.max_msg_len];
-    let mut msg_len: usize = 0;
-    let mut stdin_eof = false;
-    let mut next_invocation = Instant::now();
-
     if args.debug {
-        println!("DEBUG: recv_and_invoke loop starting");
+        println!("DEBUG: app run starting");
     }
 
-    'recv_and_invoke: loop {
-        // STEP: if we don't have anything to send and EOF is not
-        // reached yet, block on receiving a byte
+    let mut app = App::new(
+        args.max_msg_len,
+        rx,
+        args.split_on_byte,
+        Duration::from_secs(args.interval),
+        &args.notifier[0],
+        &args.notifier[1..],
+        args.debug,
+    );
 
-        if msg_len == 0 && !stdin_eof {
-            if args.debug {
-                println!("DEBUG: nothing to send; blocking on receiving byte");
-            }
-
-            // Note: the call to recv is blocking
-            if let Ok(b) = rx.recv() {
-                msg[0] = b;
-                msg_len = 1;
-            } else {
-                stdin_eof = true;
-                break 'recv_and_invoke;
-            }
-
-            // Give the sender some time to send everything it has to
-            thread::sleep(MIN_RECV_TIME);
-        }
-
-        // STEP: wait some time before proceeding, if needed
-
-        let now = Instant::now();
-        if next_invocation < now {
-            // We're "behind schedule", so let's reset next_invocation
-            next_invocation = now + interval;
-        } else {
-            thread::sleep(next_invocation - now);
-            next_invocation += interval;
-        }
-
-        // STEP: receive what is available, until channel is empty, msg is
-        // full, or EOF is reached
-
-        'nonblocking_recv: while !stdin_eof && msg_len < args.max_msg_len {
-            // Note: the call to try_recv is non-blocking
-            match rx.try_recv() {
-                Ok(b) => {
-                    msg[msg_len] = b;
-                    msg_len += 1;
-                }
-                Err(TryRecvError::Empty) => break 'nonblocking_recv,
-                Err(TryRecvError::Disconnected) => stdin_eof = true,
-            }
-        }
-
-        if stdin_eof && msg_len == 0 {
-            break 'recv_and_invoke;
-        }
-
-        // STEP: invoke the notifier command
-
-        if args.debug {
-            println!(
-                "DEBUG: invoking notifier command with input: \"{}\"",
-                escape_ascii(&msg[..msg_len]),
-            );
-        }
-
-        let status = notifier::invoke(&args.notifier[0], &args.notifier[1..], &msg[..msg_len])
-            .context("failed to invoke notifier")?;
-        if status.success() {
-            msg_len = 0;
-        } else {
-            match status.code() {
-                Some(code) => eprintln!("Error: notifier command failed with status code {code}"),
-                None => eprintln!("Error: notifier command terminated by a signal"),
-            }
-        }
-
-        if stdin_eof && msg_len == 0 {
-            break 'recv_and_invoke;
-        }
-    }
+    app.run()?;
 
     if args.debug {
-        println!("DEBUG: recv_and_invoke loop finished; stdin_eof is {stdin_eof:?}");
+        println!("DEBUG: app run finished");
     }
 
     hnd_read_and_send
