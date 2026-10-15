@@ -6,7 +6,7 @@
 
 :crab: A standalone **message buffer** application.
 
-This tool reads text from the **standard input** (`stdin`) stream and divides it into chunks, called "**messages**". Then, for each message, a **notifier** command is invoked on a separate thread.
+This tool reads text from the **standard input** (`stdin`) stream and divides it into chunks, called "**messages**". For each message, a **notifier** command is invoked concurrently.
 
 ## Installation
 
@@ -59,13 +59,9 @@ graph LR
 
 > **Note**: for more information on how to use this tool, you can also refer to the help message (`--help`).
 
-TODO recheck everything (especially README and end-to-end tests) to follow the new implementation
+## Implementation
 
-TODO consider adding some more end-to-end tests to cover more cases?
-
-TODO consider writing some unit tests
-
-TODO flowchart draft:
+Below is a **flowchart** of the logic of the `App.run` function:
 
 ```mermaid
 flowchart TD
@@ -128,3 +124,9 @@ flowchart TD
 
     End([#127937; <b>END</b>])
 ```
+
+## TODO
+
+Consider adding some more end-to-end tests to cover more cases?
+
+Consider writing some unit tests.
