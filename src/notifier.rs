@@ -41,6 +41,7 @@ where
 mod tests {
     use super::*;
 
+    #[cfg(unix)]
     #[test]
     fn writes_something() -> Result<()> {
         let status = invoke("cat", [], b"Hello, World!")?;
@@ -50,6 +51,7 @@ mod tests {
         Ok(())
     }
 
+    #[cfg(unix)]
     #[test]
     fn writes_nothing() -> Result<()> {
         let status = invoke("cat", [], b"")?;
@@ -59,6 +61,7 @@ mod tests {
         Ok(())
     }
 
+    #[cfg(unix)]
     #[test]
     fn returns_status_code() -> Result<()> {
         let status = invoke("sh", ["-c", "exit 7"], b"")?;
