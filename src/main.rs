@@ -72,20 +72,23 @@ fn main() -> Result<()> {
 
     let (tx, rx) = mpsc::sync_channel(args.max_msg_len * CHAN_SIZE_MULT);
 
-    let hnd_read_and_send = thread::spawn(move || -> Result<()> {
-        let stdin = io::stdin();
-        let handle = stdin.lock();
-        for byte in handle.bytes() {
-            let b = byte.context("failed to read byte from stdin")?;
-            if args.input_mode == InputMode::Ascii && b > 0x7f {
-                continue;
+    let stdin_reader = thread::Builder::new()
+        .name("stdin-reader".to_string())
+        .spawn(move || -> Result<()> {
+            let stdin = io::stdin();
+            let handle = stdin.lock();
+            for byte in handle.bytes() {
+                let b = byte.context("failed to read byte from stdin")?;
+                if args.input_mode == InputMode::Ascii && b > 0x7f {
+                    continue;
+                }
+                tx.send(b)
+                    .context("failed to send byte to internal channel")?;
             }
-            tx.send(b)
-                .context("failed to send byte to internal channel")?;
-        }
 
-        Ok(())
-    });
+            Ok(())
+        })
+        .context("failed to spawn stdin-reader thread")?;
 
     debug!("app run starting");
 
@@ -102,7 +105,7 @@ fn main() -> Result<()> {
 
     debug!("app run finished");
 
-    hnd_read_and_send
+    stdin_reader
         .join()
         .map_err(|panic| anyhow::anyhow!("the stdin reader thread panicked: {panic:?}"))?
         .context("the stdin reader thread returned an error")?;
