@@ -1,12 +1,45 @@
 [DEBUG msgbuf] parsed command line arguments: Args { input_mode: Binary, interval: 1, split_on_byte: None, max_msg_len: 10, notifier: ["bash", "fake-notifier.sh"] }
 [DEBUG msgbuf] app run starting
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "Hi, this i"
 Content: 'Hi, this i'
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "s sample l"
 Content: 's sample l'
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "og content"
 Error: found pattern O|o. Setting retry to 3
 [ERROR msgbuf::app] notifier command failed with status code 1
@@ -21,10 +54,32 @@ Error: retry is 1. Setting it to 0
 [ERROR msgbuf::app] notifier command failed with status code 1
 [DEBUG msgbuf::app] invoking notifier command with input: "og content"
 Content: 'og content'
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "\n\nGonna wa"
 Content: $'\n\nGonna wa'
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "it some ti"
 Error: found pattern I|i. Setting retry to 2
 [ERROR msgbuf::app] notifier command failed with status code 1
@@ -36,16 +91,43 @@ Error: retry is 1. Setting it to 0
 [ERROR msgbuf::app] notifier command failed with status code 1
 [DEBUG msgbuf::app] invoking notifier command with input: "it some ti"
 Content: 'it some ti'
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] no byte received by polling, sending len_send (3) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "me\n"
 Content: $'me\n'
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "And now gu"
 Error: found pattern A|a. Setting retry to 0
 [ERROR msgbuf::app] notifier command failed with status code 1
 [DEBUG msgbuf::app] invoking notifier command with input: "And now gu"
 Content: 'And now gu'
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "ess what? "
 Error: found pattern E|e. Setting retry to 1
 [ERROR msgbuf::app] notifier command failed with status code 1
@@ -54,16 +136,61 @@ Error: retry is 1. Setting it to 0
 [ERROR msgbuf::app] notifier command failed with status code 1
 [DEBUG msgbuf::app] invoking notifier command with input: "ess what? "
 Content: 'ess what? '
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "Some more "
 Content: 'Some more '
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "time\nA lit"
 Content: $'time\nA lit'
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] buffer full, sending len_send (10) bytes
 [DEBUG msgbuf::app] invoking notifier command with input: "tle more\nO"
 Content: $'tle more\nO'
-[DEBUG msgbuf::app] blocking on receiving byte
+[DEBUG msgbuf::app] receiving byte (blocking)
+[DEBUG msgbuf::app] sleeping before receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] receiving byte (polling)
+[DEBUG msgbuf::app] reached EOF
+[DEBUG msgbuf::app] sending remaining bytes (9)
 [DEBUG msgbuf::app] invoking notifier command with input: "k, \"stop\""
 Content: 'k, "stop"'
 [DEBUG msgbuf] app run finished
