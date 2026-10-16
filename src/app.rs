@@ -65,6 +65,8 @@ impl App {
         notifier_program: impl Into<String>,
         notifier_args: impl IntoIterator<Item = impl Into<String>>,
     ) -> Self {
+        assert!(size > 0);
+
         Self {
             buf: vec![0u8; size],
             len_all: 0,
@@ -313,6 +315,21 @@ mod tests {
     use super::*;
 
     use std::sync::mpsc;
+
+    #[test]
+    #[should_panic(expected = "assertion failed: size > 0")]
+    fn zero_sized_buffer_panics() {
+        let (_tx, rx) = mpsc::channel();
+
+        App::new(
+            0,
+            rx,
+            None,
+            Duration::ZERO,
+            "/nonexistent/program",
+            std::iter::empty::<String>(),
+        );
+    }
 
     #[test]
     fn empty_input_succeeds_without_invoking_notifier() -> Result<()> {
