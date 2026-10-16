@@ -2,6 +2,9 @@
 
 set -e
 
+# Keep in mind that you cannot go too fast here, as there is the
+# MIN_RECV_TIME sleep interval to take into account
+
 sleep 0.250
 
 echo 'Hi, this is sample log content'
