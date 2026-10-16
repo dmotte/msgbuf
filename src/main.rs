@@ -31,9 +31,14 @@ struct Args {
     #[arg(short = 'I', long, value_enum, default_value = "binary")]
     input_mode: InputMode,
 
+    /// Minimum receive interval (in milliseconds), to give the sender some
+    /// time to send everything it has to
+    #[arg(short = 'r', long, default_value_t = 100)]
+    interval_recv: u64,
+
     /// Minimum interval (in milliseconds) between notifier command invocations
     #[arg(short, long, default_value_t = 60_000)]
-    interval: u64,
+    interval_send: u64,
 
     /// If set, message splits will preferably occur on this byte value
     #[arg(short, long)]
@@ -96,7 +101,8 @@ fn main() -> Result<()> {
         args.max_msg_len,
         rx,
         args.split_on_byte,
-        Duration::from_millis(args.interval),
+        Duration::from_millis(args.interval_recv),
+        Duration::from_millis(args.interval_send),
         &args.notifier[0],
         &args.notifier[1..],
     )

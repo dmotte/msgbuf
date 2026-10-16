@@ -21,9 +21,6 @@ fn escape_ascii(bytes: &[u8]) -> String {
     result
 }
 
-/// Minimum receive time
-const MIN_RECV_TIME: Duration = Duration::from_millis(100);
-
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
     #[error("failed to invoke notifier: {0}")]
@@ -46,10 +43,14 @@ pub struct App {
     /// If set, message splits will preferably occur on this byte value
     split_on_byte: Option<u8>,
 
+    /// Minimum receive interval, to give the sender half of the channel some
+    /// time to send everything it has to
+    interval_recv: Duration,
     /// Minimum interval between send attempts
     interval_send: Duration,
     /// Time instant when the next send will be possible
     next_send: Instant,
+
     /// Path of the notifier command
     notifier_program: String,
     /// Arguments to be passed to the notifier command
@@ -61,6 +62,7 @@ impl App {
         size: usize,
         rx: Receiver<u8>,
         split_on_byte: Option<u8>,
+        interval_recv: Duration,
         interval_send: Duration,
         notifier_program: impl Into<String>,
         notifier_args: impl IntoIterator<Item = impl Into<String>>,
@@ -76,8 +78,10 @@ impl App {
 
             split_on_byte,
 
+            interval_recv,
             interval_send,
             next_send: Instant::now(),
+
             notifier_program: notifier_program.into(),
             notifier_args: notifier_args.into_iter().map(Into::into).collect(),
         }
@@ -134,9 +138,10 @@ impl App {
         }
     }
 
-    /// Sleeps a bit to give the sender some time to send everything it has to
-    fn sleep_for_recv() {
-        thread::sleep(MIN_RECV_TIME);
+    /// Sleeps a bit to give the sender half of the channel some time to
+    /// send everything it has to
+    fn sleep_for_recv(&self) {
+        thread::sleep(self.interval_recv);
     }
 
     /// Sleeps for the time required before the next send, if needed
@@ -206,7 +211,7 @@ impl App {
             'sleep_recv_polling: loop {
                 debug!("sleeping before receiving byte (polling)");
 
-                Self::sleep_for_recv();
+                self.sleep_for_recv();
 
                 self.sleep_for_send();
 
@@ -326,6 +331,7 @@ mod tests {
             rx,
             None,
             Duration::ZERO,
+            Duration::ZERO,
             "/nonexistent/program",
             std::iter::empty::<String>(),
         );
@@ -343,6 +349,7 @@ mod tests {
             10,
             rx,
             None,
+            Duration::ZERO,
             Duration::ZERO,
             "/nonexistent/program",
             std::iter::empty::<String>(),
