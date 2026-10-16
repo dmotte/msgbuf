@@ -6,6 +6,6 @@ cd "$(dirname "$0")"
 
 export RUST_LOG=DEBUG
 
-args=(-i200 -m10)
+args=(-i500 -m10)
 
 exec bash helpers/run-check-output.sh expected-01.txt "${args[@]}"

@@ -1,4 +1,4 @@
-[DEBUG msgbuf] parsed command line arguments: Args { input_mode: Binary, interval: 200, split_on_byte: Some(10), max_msg_len: 10, notifier: ["bash", "fake-notifier.sh"] }
+[DEBUG msgbuf] parsed command line arguments: Args { input_mode: Binary, interval: 500, split_on_byte: Some(10), max_msg_len: 10, notifier: ["bash", "fake-notifier.sh"] }
 [DEBUG msgbuf] app run starting
 [DEBUG msgbuf::app] receiving byte (blocking)
 [DEBUG msgbuf::app] receiving byte (blocking)
